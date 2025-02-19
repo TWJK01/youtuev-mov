@@ -1,0 +1,21 @@
+name: yt-dlp Workflow
+
+on:
+ push:
+   branches:
+     - main
+
+jobs:
+ setup-yt-dlp:
+   runs-on: ubuntu-latest
+
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v2
+
+     - name: Set up yt-dlp
+       uses: AnimMouse/setup-yt-dlp@v3
+
+     - name: Run yt-dlp command
+       run: |
+         yt-dlp https://www.youtube.com/watch?v=BaW_jenozKc

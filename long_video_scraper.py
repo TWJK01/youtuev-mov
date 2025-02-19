@@ -29,4 +29,3 @@ with open(output_file, 'w', encoding='utf-8') as f:
        f.write(f'{title} {url}\n')
 
 print(f'已將 20 分鐘以上的影片資訊寫入 {output_file}')
- 

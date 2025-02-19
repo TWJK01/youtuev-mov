@@ -2,7 +2,7 @@ name: Fetch Long Videos
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 0 點執行一次，可根據需求調整
+    - cron: '0 0 * * *'  # 每天 UTC 0 點執行一次
   workflow_dispatch:     # 手動觸發
 
 jobs:
@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Remove untracked file
+        run: rm -f long_videos.txt
 
       - name: Set up Python
         uses: actions/setup-python@v4

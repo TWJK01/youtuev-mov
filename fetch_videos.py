@@ -17,7 +17,7 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 # 過濾出長度超過 20 分鐘（1200 秒）的影片
 long_videos = [video for video in videos if video.get('duration', 0) > 1200]
 
-# 將影片中文名稱與網址以「中文網址名稱,網址」格式寫入文字檔
+# 將影片的網頁標題與網址以「網頁標題,網址」格式寫入文字檔
 with open('long_videos.txt', 'w', encoding='utf-8') as f:
     for video in long_videos:
         title = video.get('title', '無標題')

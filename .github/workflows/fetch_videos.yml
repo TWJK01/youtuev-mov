@@ -2,8 +2,8 @@ name: Fetch Long Videos
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 0 點執行一次，依需求調整
-  workflow_dispatch:     # 手動觸發
+    - cron: '0 0 * * *'  # 每天 UTC 0 點執行一次
+  workflow_dispatch:
 
 jobs:
   fetch:
@@ -23,6 +23,9 @@ jobs:
 
       - name: Run fetch script
         run: python fetch_videos.py
+
+      - name: Pull remote changes
+        run: git pull --rebase || true
 
       - name: Commit and push updated file
         run: |

@@ -1,36 +1,26 @@
-name: Fetch Long Videos
+- name: Checkout repository
+  uses: actions/checkout@v3
 
-on:
-  schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 0 點執行一次
-  workflow_dispatch:
+- name: Set up Python
+  uses: actions/setup-python@v4
+  with:
+    python-version: '3.x'
 
-jobs:
-  fetch:
-    runs-on: ubuntu-latest
+- name: Install yt-dlp
+  run: pip install yt-dlp
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+- name: Run fetch script
+  run: python fetch_videos.py
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+- name: Pull remote changes
+  run: |
+    git fetch origin main
+    git rebase origin/main || git merge origin/main
 
-      - name: Install yt-dlp
-        run: pip install yt-dlp
-
-      - name: Run fetch script
-        run: python fetch_videos.py
-
-      - name: Pull remote changes
-        run: git pull --rebase || true
-
-      - name: Commit and push updated file
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add long_videos.txt
-          git commit -m "Update long_videos.txt" || echo "No changes to commit"
-          git push
+- name: Commit and push updated file
+  run: |
+    git config --local user.email "github-actions[bot]@users.noreply.github.com"
+    git config --local user.name "github-actions[bot]"
+    git add long_videos.txt
+    git commit -m "Update long_videos.txt" || echo "No changes to commit"
+    git push

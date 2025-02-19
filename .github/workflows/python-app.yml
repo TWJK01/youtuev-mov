@@ -28,7 +28,7 @@ jobs:
        run: python long_video_scraper.py
 
      - name: 上傳文字檔
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        with:
          name: long_videos
          path: long_videos.txt

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import os
 
 def get_long_videos(channel_url):
     headers = {
@@ -31,7 +32,13 @@ def get_long_videos(channel_url):
     return videos
 
 def save_to_file(video_list, filename="videos_list.txt"):
-    if not video_list:  # 確保即使沒有影片，仍然建立檔案
+    # 如果檔案不存在，先建立
+    if not os.path.exists(filename):
+        with open(filename, "w", encoding="utf-8") as file:
+            file.write("")
+
+    # 確保即使沒有影片，仍然建立檔案
+    if not video_list:
         video_list.append("No videos found")
 
     with open(filename, "w", encoding="utf-8") as file:
@@ -41,7 +48,4 @@ def save_to_file(video_list, filename="videos_list.txt"):
 if __name__ == "__main__":
     channel_url = "https://www.youtube.com/@tagtheatre1475/videos"
     videos = get_long_videos(channel_url)
-    if videos:
-        save_to_file(videos)
-    else:
-        print("No videos found or failed to scrape.")
+    save_to_file(videos)

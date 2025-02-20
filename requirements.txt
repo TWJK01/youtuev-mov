@@ -1,2 +1,5 @@
-requests
-beautifulsoup4
+selenium
+webdriver-manager
+git add requirements.txt
+git commit -m "Add selenium to requirements.txt"
+git push

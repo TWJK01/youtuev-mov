@@ -1,7 +1,7 @@
 {
   "name": "youtube-scraper",
   "version": "1.0.0",
-  "description": "抓取 YouTube 頻道中播放長度大於 20 分鐘的影片網址與標題",
+  "description": "抓取指定 YouTube 頻道中播放長度大於 20 分鐘的影片標題與網址",
   "main": "scrape.js",
   "scripts": {
     "start": "node scrape.js"

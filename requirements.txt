@@ -3,3 +3,4 @@ webdriver-manager
 git add requirements.txt
 git commit -m "Add selenium to requirements.txt"
 git push
+pip install selenium webdriver-manager

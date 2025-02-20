@@ -9,8 +9,14 @@ const fs = require('fs');
   });
   const page = await browser.newPage();
   
-  // 延長超時至 60 秒
-  await page.goto('https://www.youtube.com/@tagtheatre1475/videos', { waitUntil: 'networkidle2', timeout: 60000 });
+  // 禁用導航超時（或設置較長超時）
+  await page.setDefaultNavigationTimeout(0);
+
+  // 前往指定的頻道影片頁面，使用較快的 DOM 內容載入等待
+  await page.goto('https://www.youtube.com/@tagtheatre1475/videos', { waitUntil: 'domcontentloaded' });
+  
+  // 等待影片列表渲染完成
+  await page.waitForSelector('ytd-grid-video-renderer', { timeout: 90000 });
   
   // 自動捲動，確保載入更多影片
   await autoScroll(page);
@@ -61,7 +67,7 @@ const fs = require('fs');
         let totalHeight = 0;
         const distance = 100;
         const timer = setInterval(() => {
-          const scrollHeight = document.body.scrollHeight;
+          const scrollHeight = document.documentElement.scrollHeight;
           window.scrollBy(0, distance);
           totalHeight += distance;
           if (totalHeight >= scrollHeight) {

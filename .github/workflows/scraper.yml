@@ -2,7 +2,7 @@ name: YouTube Scraper
 
 on:
   schedule:
-    - cron: "0 */2 * * *"  # 每2小時執行一次
+    - cron: "0 */2 * * *"  # 每 2 小時執行一次
   workflow_dispatch:  # 允許手動觸發
 
 jobs:
@@ -28,6 +28,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add videos_list.txt
+          touch videos_list.txt  # 確保檔案存在
+          git add videos_list.txt || echo "No changes to commit"
           git commit -m "Auto-update videos list" || echo "No changes to commit"
-          git push
+          git push || echo "No changes to push"

@@ -19,7 +19,10 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install selenium webdriver-manager
+
+      - name: Check installed packages
+        run: pip list  # 確保 selenium 已安裝
 
       - name: Run scraper
         run: python scraper.py

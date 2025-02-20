@@ -31,6 +31,9 @@ def get_long_videos(channel_url):
     return videos
 
 def save_to_file(video_list, filename="videos_list.txt"):
+    if not video_list:  # 確保即使沒有影片，仍然建立檔案
+        video_list.append("No videos found")
+
     with open(filename, "w", encoding="utf-8") as file:
         file.write("\n".join(video_list))
     print(f"Saved {len(video_list)} videos to {filename}")

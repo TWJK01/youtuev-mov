@@ -1,28 +1,34 @@
 import yt_dlp
-import json
 
-# 設定 YouTube 頻道 URL
-channel_url = 'https://www.youtube.com/@VideolandMovie/videos'
+# 设置 YouTube 频道 URL
+channel_url = 'https://www.youtube.com/@games002-n3u/videos'
 
-# 設定 yt-dlp 的選項
+# 设置 yt-dlp 的选项
 ydl_opts = {
-    'quiet': True,        # 靜默模式
-    'extract_flat': True, # 僅提取影片資訊，不下載影片
+    'quiet': True,        # 静默模式
+    'extract_flat': True, # 仅提取视频信息，不下载视频
 }
 
-# 使用 yt-dlp 抓取影片資訊
+# 使用 yt-dlp 抓取视频信息
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
     result = ydl.extract_info(channel_url, download=False)
     videos = result.get('entries', [])
 
-# 過濾出長度超過 20 分鐘（1200 秒）的影片
-long_videos = [video for video in videos if video.get('duration', 0) > 1200]
+# 过滤出时长超过 20 分钟（1200 秒）的视频
+long_videos = []
+for video in videos:
+    # 获取每个视频的详细信息
+    video_info = ydl.extract_info(video['url'], download=False)
+    duration = video_info.get('duration', 0)
+    if duration > 1200:
+        long_videos.append({
+            'title': video_info.get('title', '无标题'),
+            'url': video_info.get('webpage_url', '无网址')
+        })
 
-# 將影片標題與網址以「網頁標題,網址」格式寫入文字檔
+# 将视频标题和网址以「标题,网址」格式写入文本文件
 with open('long_videos.txt', 'w', encoding='utf-8') as f:
     for video in long_videos:
-        title = video.get('title', '無標題')
-        url = video.get('url', '無網址')
-        f.write(f'{title},{url}\n')
+        f.write(f"{video['title']},{video['url']}\n")
 
-print(f'已將 {len(long_videos)} 部影片資訊寫入 long_videos.txt')
+print(f'已将 {len(long_videos)} 部视频信息写入 long_videos.txt')

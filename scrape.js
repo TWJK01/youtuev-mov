@@ -2,15 +2,15 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 (async () => {
-  // 開啟 headless 瀏覽器
+  // 使用新的 headless 模式，避免棄用警告
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: "new",
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
   const page = await browser.newPage();
   
-  // 前往指定的頻道影片頁面
-  await page.goto('https://www.youtube.com/@tagtheatre1475/videos', { waitUntil: 'networkidle2' });
+  // 延長超時至 60 秒
+  await page.goto('https://www.youtube.com/@tagtheatre1475/videos', { waitUntil: 'networkidle2', timeout: 60000 });
   
   // 自動捲動，確保載入更多影片
   await autoScroll(page);
@@ -27,7 +27,7 @@ const fs = require('fs');
         const title = titleElem.textContent.trim();
         const href = titleElem.getAttribute('href');
         const url = href ? 'https://www.youtube.com' + href : '';
-        const durationText = durationElem.textContent.trim();  // 格式可能為 "20:15" 或 "1:02:30"
+        const durationText = durationElem.textContent.trim();  // 格式例如 "20:15" 或 "1:02:30"
         
         // 轉換影片長度為秒數
         let durationSeconds = 0;

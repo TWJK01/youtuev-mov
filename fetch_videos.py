@@ -2,7 +2,7 @@ import yt_dlp
 import json
 
 # 設定 YouTube 頻道 URL
-channel_url = 'https://www.youtube.com/@games002-n3u/videos'
+channel_url = 'https://www.youtube.com/@VideolandMovie/videos'
 
 # 設定 yt-dlp 的選項
 ydl_opts = {

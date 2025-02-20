@@ -28,7 +28,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          touch videos_list.txt  # 確保檔案存在
           git add videos_list.txt || echo "No changes to commit"
           git commit -m "Auto-update videos list" || echo "No changes to commit"
           git push || echo "No changes to push"

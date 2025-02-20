@@ -13,8 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Remove untracked file
-        run: rm -f long_videos.txt
+      - name: Remove untracked files
+        run: git clean -f
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -30,7 +30,7 @@ jobs:
       - name: Pull remote changes
         run: |
           git fetch origin main
-          git rebase origin/main || git merge origin/main
+          git merge origin/main
 
       - name: Commit and push updated file
         run: |
